@@ -1,17 +1,3 @@
-## The High-Level Picture
-The more we explored this proxy idea, the more ideas I had about remote-data collection, and our eventual goal to provide Print Tracker as a simple self-hosted solution (like our competitors).
-
-### Remote Data Collection
-The biggest hurtle that we deal with is fine-tuning our data collection process which historically resulted in lots of iterative, remote-updates (very time-consuming). These inconveniences brought about the DGI and TEC architectures which aimed to define the data collection process as loadable configurations that could be tweaked and changed remotely. Even with these architectures, we're generally releasing upgrades 1-2 times per week.
-
-Having a proxy mesh would replace a data collection agent on the customer network with a very basic proxy agent that would need minimal upgrades. The data collection agent would be moved to server-side, when a device scan needs to run, the agent would create a new tunnel object (shown below) and wait for the tunnel to be started by the locally-installed proxy agent before using the tunnel to scan the network.
-
-### Virtual Network
-The virtual network idea entails tunneling traffic for every IP address in the network. Once the tunnel is established, you could "mount" a data collection agent into the virtual network and perform remote device scans on an entire network at a time.
-
-### Performance
-My biggest concern with remote data collection is the added latency between request and response that would follow every request we made through the tunnel. In order to reduce the total runtime for a process such as collecting data from a network's worth of devices, we could look at allowing several requests to run concurrently. For example, instead of making a request for one OID value at a time, we could potentially allow up to 10 concurrent requests from a remote data collection agent at a time.
-
 ### Installation
 The following process would connect and register and agent, as well as registering the network the agent is in charge of tunneling:
 1. User enters a bootstrapping token into the agent that was obtained from the web portal.
